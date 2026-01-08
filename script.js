@@ -1,230 +1,110 @@
-// =========================
-// DATA ASPEK
-// =========================
 const aspects = [
-  aspect(
-    "Karakter & Nilai Hidup",
-    "konsistensi prinsip hidup saat diuji",
-    9,
-    [
-      question("janji yang merepotkan", [2,3,5,7,9]),
-      question("godaan melanggar prinsip", [2,3,5,7,9]),
-      question("beda nilai dengan pasangan", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Regulasi Emosi",
-    "cara mengelola emosi saat konflik",
-    9,
-    [
-      question("dikritik di depan umum", [2,3,4,7,9]),
-      question("stres tapi dituntut perhatian", [2,3,4,7,9]),
-      question("konflik lama diungkit", [2,3,4,7,9])
-    ]
-  ),
-  aspect(
-    "Komunikasi & Konflik",
-    "cara menyampaikan dan menyelesaikan masalah",
-    8,
-    [
-      question("beda pendapat serius", [2,3,4,7,9]),
-      question("disalahpahami", [2,3,4,7,9]),
-      question("diskusi buntu", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Tanggung Jawab & Konsistensi",
-    "apakah tindakan bisa diandalkan",
-    8,
-    [
-      question("menepati komitmen", [2,3,5,7,9]),
-      question("tanggung jawab berat", [3,4,5,7,9]),
-      question("bosan rutinitas", [2,3,4,7,9])
-    ]
-  ),
-  aspect(
-    "Tujuan Hidup & Arah",
-    "kejelasan visi hidup",
-    8,
-    [
-      question("rencana jangka panjang", [2,4,5,7,9]),
-      question("tujuan tidak sejalan", [3,4,5,7,9]),
-      question("fase hidup sulit", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Finansial Mindset",
-    "cara berpikir soal uang dan usaha",
-    7,
-    [
-      question("kondisi keuangan sulit", [2,3,5,7,9]),
-      question("beda gaya hidup", [3,4,5,7,9]),
-      question("utang", [2,3,4,7,9])
-    ]
-  ),
-  aspect(
-    "Spiritualitas & Makna",
-    "hubungan dengan makna hidup",
-    6,
-    [
-      question("krisis hidup", [3,4,5,7,9]),
-      question("beda keyakinan", [2,4,5,7,9]),
-      question("makna penderitaan", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Empati & Kepedulian",
-    "memahami perasaan orang lain",
-    7,
-    [
-      question("pasangan sedih", [2,3,5,7,9]),
-      question("emosi orang lain", [3,4,5,7,9]),
-      question("beda sudut pandang", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Batas Diri & Respek",
-    "menghargai ruang pribadi",
-    8,
-    [
-      question("privasi", [2,4,5,7,9]),
-      question("cemburu", [2,3,4,7,9]),
-      question("permintaan berlebihan", [2,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Kecocokan Seksual",
-    "kenyamanan dan komunikasi seksual",
-    6,
-    [
-      question("beda kebutuhan", [2,3,5,7,9]),
-      question("komunikasi seks", [3,4,5,7,9]),
-      question("fase bosan", [3,4,5,7,9])
-    ]
-  ),
-  aspect(
-    "Ketertarikan Fisik",
-    "daya tarik realistis dan sehat",
-    4,
-    [
-      question("fisik berubah", [2,4,5,7,9]),
-      question("ketertarikan menurun", [2,4,5,7,9]),
-      question("standar fisik", [2,3,4,7,9])
-    ]
-  ),
-  aspect(
-    "Growth Mindset",
-    "kesediaan belajar dan bertumbuh",
-    8,
-    [
-      question("dikritik", [2,3,4,7,9]),
-      question("gagal", [3,4,5,7,9]),
-      question("belajar dari konflik", [3,4,5,7,9])
-    ]
-  )
+  {
+    name: "Regulasi Emosi",
+    weight: 9,
+    desc: "Kemampuan mengenali, mengelola, dan mengekspresikan emosi tanpa melukai diri sendiri atau orang lain.",
+    question: "Saat emosi muncul (marah, sedih, cemburu), sejauh mana kamu mampu mengelolanya dengan sadar?"
+  },
+  {
+    name: "Komunikasi",
+    weight: 8,
+    desc: "Kemampuan menyampaikan pikiran dan perasaan secara jujur, jelas, dan tidak menyerang.",
+    question: "Apakah kamu mampu menyampaikan perasaan tanpa menyalahkan atau memanipulasi?"
+  },
+  {
+    name: "Boundaries",
+    weight: 8,
+    desc: "Kemampuan menjaga batas sehat antara memberi dan mengorbankan diri.",
+    question: "Apakah kamu mampu berkata tidak tanpa rasa bersalah berlebihan?"
+  },
+  {
+    name: "Nilai & Prinsip Hidup",
+    weight: 9,
+    desc: "Kejelasan nilai hidup dan konsistensi menjalankannya.",
+    question: "Seberapa jelas dan konsisten prinsip hidupmu dalam relasi?"
+  },
+  {
+    name: "Tanggung Jawab",
+    weight: 7,
+    desc: "Kesediaan bertanggung jawab atas pilihan dan konsekuensi.",
+    question: "Apakah kamu mengakui kesalahan tanpa defensif?"
+  },
+  {
+    name: "Kedewasaan Konflik",
+    weight: 8,
+    desc: "Cara menghadapi konflik tanpa menghindar atau menyerang.",
+    question: "Saat konflik, apakah kamu fokus pada solusi, bukan menang?"
+  },
+  {
+    name: "Empati",
+    weight: 9,
+    desc: "Kemampuan memahami perasaan pasangan tanpa menghapus diri sendiri.",
+    question: "Seberapa sering kamu benar-benar mendengar tanpa menyela?"
+  },
+  {
+    name: "Seksualitas Sehat",
+    weight: 6,
+    desc: "Kenyamanan, komunikasi, dan kesadaran dalam relasi seksual.",
+    question: "Apakah kamu mampu membicarakan kebutuhan seksual dengan aman?"
+  },
+  {
+    name: "Spiritualitas",
+    weight: 6,
+    desc: "Kesadaran makna hidup dan keterhubungan dengan sesuatu yang lebih besar.",
+    question: "Apakah hidupmu dipandu oleh nilai makna, bukan impuls?"
+  },
+  {
+    name: "Visi Hidup & Arah",
+    weight: 8,
+    desc: "Kejelasan arah hidup dan tujuan jangka panjang.",
+    question: "Apakah kamu tahu ke mana hidupmu menuju?"
+  }
 ];
 
-// =========================
-// HELPER
-// =========================
-function aspect(name, desc, weight, questions) {
-  return { name, desc, weight, questions };
-}
-
-function question(label, scores) {
-  return {
-    label,
-    options: ["A","B","C","D","E"],
-    scores
-  };
-}
-
-// =========================
-// STATE
-// =========================
 let index = 0;
-const answers = aspects.map(a => a.questions.map(() => null));
+let scores = [];
 
-const titleEl = document.getElementById("aspectTitle");
-const descEl = document.getElementById("aspectDesc");
-const qEl = document.getElementById("questions");
-const progressEl = document.getElementById("progress");
-
-// =========================
-// RENDER
-// =========================
 function render() {
   const a = aspects[index];
-  progressEl.textContent = `aspek ${index+1} dari ${aspects.length}`;
-  titleEl.textContent = a.name;
-  descEl.textContent = a.desc;
-  qEl.innerHTML = "";
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <h1>${a.name}</h1>
+      <p><em>${a.desc}</em></p>
+      <p><strong>${a.question}</strong></p>
 
-  a.questions.forEach((q, qi) => {
-    const div = document.createElement("div");
-    div.className = "question";
-    div.innerHTML = `<p>${q.label}</p>`;
+      <input type="range" min="1" max="5" value="3" id="slider">
+      <div class="value">Nilai: <span id="val">3</span></div>
 
-    q.options.forEach((opt, oi) => {
-      const checked = answers[index][qi] === oi ? "checked" : "";
-      div.innerHTML += `
-        <label class="option">
-          <input type="radio" name="q${qi}" ${checked}
-            onclick="answers[${index}][${qi}] = ${oi}">
-          ${opt}
-        </label>
-      `;
-    });
+      <button onclick="next()">Next</button>
+    </div>
+  `;
 
-    qEl.appendChild(div);
-  });
+  const slider = document.getElementById("slider");
+  const val = document.getElementById("val");
+  slider.oninput = () => val.innerText = slider.value;
 }
 
-// =========================
-// NAVIGATION
-// =========================
-document.getElementById("nextBtn").onclick = () => {
-  if (index < aspects.length - 1) {
-    index++;
+function next() {
+  const value = document.getElementById("slider").value;
+  scores[index] = value * aspects[index].weight;
+  index++;
+
+  if (index < aspects.length) {
     render();
   } else {
     showResult();
   }
-};
+}
 
-document.getElementById("prevBtn").onclick = () => {
-  if (index > 0) {
-    index--;
-    render();
-  }
-};
-
-// =========================
-// RESULT (HITUNGAN BENAR)
-// =========================
 function showResult() {
-  let total = 0;
-
-  aspects.forEach((a, ai) => {
-    const scores = a.questions.map((q, qi) => {
-      const ans = answers[ai][qi];
-      return q.scores[ans];
-    });
-
-    const avg = scores.reduce((s,v)=>s+v,0) / scores.length;
-    total += avg * a.weight;
-  });
-
+  const total = scores.reduce((a,b) => a+b, 0);
   document.getElementById("app").innerHTML = `
-    <h2>hasil akhir</h2>
-    <p>total skor: <b>${Math.round(total)}</b></p>
-    <p>
-      ${total < 700
-        ? "belum siap hubungan serius"
-        : total < 850
-        ? "cukup siap dengan seleksi ketat"
-        : "siap hubungan jangka panjang sehat"}
-    </p>
+    <div class="card">
+      <h1>Hasil Akhir</h1>
+      <p>Total Skor Kamu:</p>
+      <h2>${total}</h2>
+      <p>Skor ini menunjukkan kesiapan relasimu secara keseluruhan.</p>
+    </div>
   `;
 }
 
