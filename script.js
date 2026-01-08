@@ -1,149 +1,187 @@
 const aspects = [
   {
-    id: "character",
     name: "Karakter & Nilai Hidup",
-    weight: 9
+    desc: "konsistensi prinsip hidup saat diuji",
+    weight: 9,
+    questions: [
+      q("janji yang merepotkan", [3,2,4,7,9]),
+      q("godaan melanggar prinsip", [2,3,4,7,9]),
+      q("berbeda nilai dengan pasangan", [3,4,5,7,9])
+    ]
   },
   {
-    id: "emotion",
     name: "Regulasi Emosi",
-    weight: 9
+    desc: "cara mengelola emosi saat konflik",
+    weight: 9,
+    questions: [
+      q("dikritik di depan umum", [3,2,4,7,9]),
+      q("stres tapi dituntut perhatian", [3,2,4,7,9]),
+      q("konflik lama diungkit", [2,3,4,7,9])
+    ]
   },
   {
-    id: "communication",
-    name: "Komunikasi",
-    weight: 8
+    name: "Komunikasi & Konflik",
+    desc: "cara menyampaikan & menyelesaikan masalah",
+    weight: 8,
+    questions: [
+      q("beda pendapat serius", [2,3,4,7,9]),
+      q("disalahpahami", [3,2,4,7,9]),
+      q("diskusi buntu", [3,4,5,7,9])
+    ]
   },
   {
-    id: "sexual",
-    name: "Kecocokan Seksual",
-    weight: 6
+    name: "Tanggung Jawab & Konsistensi",
+    desc: "apakah tindakan bisa diandalkan",
+    weight: 8,
+    questions: [
+      q("janji pribadi", [2,3,5,7,9]),
+      q("tanggung jawab berat", [3,4,5,7,9]),
+      q("bosan rutinitas", [2,3,4,7,9])
+    ]
   },
   {
-    id: "spiritual",
+    name: "Tujuan Hidup & Arah",
+    desc: "kejelasan visi hidup",
+    weight: 8,
+    questions: [
+      q("rencana 5 tahun", [2,4,5,7,9]),
+      q("tujuan tidak sejalan", [3,4,5,7,9]),
+      q("fase sulit hidup", [3,4,5,7,9])
+    ]
+  },
+  {
+    name: "Finansial Mindset",
+    desc: "cara berpikir soal uang & usaha",
+    weight: 7,
+    questions: [
+      q("keuangan sulit", [2,3,5,7,9]),
+      q("perbedaan gaya hidup", [3,4,5,7,9]),
+      q("utang", [2,3,4,7,9])
+    ]
+  },
+  {
     name: "Spiritualitas & Makna",
-    weight: 6
+    desc: "hubungan dengan makna hidup",
+    weight: 6,
+    questions: [
+      q("krisis hidup", [3,4,5,7,9]),
+      q("beda keyakinan", [2,4,5,7,9]),
+      q("makna penderitaan", [3,4,5,7,9])
+    ]
+  },
+  {
+    name: "Empati & Kepedulian",
+    desc: "kemampuan memahami perasaan orang lain",
+    weight: 7,
+    questions: [
+      q("pasangan sedih", [2,3,5,7,9]),
+      q("emosi orang lain", [3,4,5,7,9]),
+      q("beda sudut pandang", [3,4,5,7,9])
+    ]
+  },
+  {
+    name: "Batas Diri & Respek",
+    desc: "menghargai ruang pribadi",
+    weight: 8,
+    questions: [
+      q("privasi", [2,4,5,7,9]),
+      q("cemburu", [2,3,4,7,9]),
+      q("permintaan berlebihan", [2,4,5,7,9])
+    ]
+  },
+  {
+    name: "Kecocokan Seksual",
+    desc: "kenyamanan & komunikasi seksual",
+    weight: 6,
+    questions: [
+      q("beda kebutuhan", [2,3,5,7,9]),
+      q("komunikasi seks", [3,4,5,7,9]),
+      q("fase bosan", [3,4,5,7,9])
+    ]
+  },
+  {
+    name: "Ketertarikan Fisik",
+    desc: "daya tarik realistis & sehat",
+    weight: 4,
+    questions: [
+      q("fisik berubah", [2,4,5,7,9]),
+      q("ketertarikan menurun", [2,4,5,7,9]),
+      q("standar fisik", [2,3,4,7,9])
+    ]
+  },
+  {
+    name: "Growth Mindset",
+    desc: "kesediaan bertumbuh",
+    weight: 8,
+    questions: [
+      q("dikritik", [2,3,4,7,9]),
+      q("gagal", [3,4,5,7,9]),
+      q("belajar dari konflik", [3,4,5,7,9])
+    ]
   }
 ];
 
-// =======================
-// REKOMENDASI OTOMATIS
-// =======================
-function getFeedback(score, weight) {
-  if (score <= 3) {
-    return {
-      condition: "sangat lemah",
-      pattern: "rawan konflik & ketergantungan",
-      advice: "fokus perbaiki diri sebelum hubungan serius"
-    };
-  }
-  if (score <= 5) {
-    return {
-      condition: "kurang stabil",
-      pattern: "hubungan naik turun",
-      advice: "perlu latihan konsistensi & refleksi"
-    };
-  }
-  if (score <= 7) {
-    return {
-      condition: "cukup sehat",
-      pattern: "hubungan bisa berjalan",
-      advice: "pilih pasangan yang mendukung pertumbuhan"
-    };
-  }
-  if (score <= 9) {
-    return {
-      condition: "kuat",
-      pattern: "hubungan relatif aman",
-      advice: "jaga standar & batas pribadi"
-    };
-  }
+// ===== helper =====
+function q(label, scores) {
   return {
-    condition: "sangat matang",
-    pattern: "siap hubungan jangka panjang",
-    advice: "cari pasangan setara, jangan menurunkan level"
+    label,
+    options: ["A","B","C","D","E"],
+    scores
   };
 }
 
-// =======================
-// RENDER UI
-// =======================
-const form = document.getElementById("assessmentForm");
+let index = 0;
+const answers = aspects.map(a => a.questions.map(() => null));
 
-aspects.forEach(aspect => {
-  const div = document.createElement("div");
-  div.className = "aspect";
+const titleEl = document.getElementById("aspectTitle");
+const descEl = document.getElementById("aspectDesc");
+const qEl = document.getElementById("questions");
 
-  div.innerHTML = `
-    <div class="aspect-header">
-      <span>${aspect.name}</span>
-      <span id="${aspect.id}-value">5</span>
-    </div>
+function render() {
+  const a = aspects[index];
+  titleEl.textContent = `${index+1}. ${a.name}`;
+  descEl.textContent = a.desc;
+  qEl.innerHTML = "";
 
-    <input 
-      type="range" 
-      min="0" 
-      max="10" 
-      value="5"
-      id="${aspect.id}"
-    />
+  a.questions.forEach((q, qi) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<p>${q.label}</p>`;
+    q.options.forEach((opt, oi) => {
+      div.innerHTML += `
+        <label class="option">
+          <input type="radio" name="q${qi}" 
+          ${answers[index][qi]===oi?"checked":""}
+          onclick="answers[${index}][${qi}]=${oi}">
+          ${opt}
+        </label>`;
+    });
+    qEl.appendChild(div);
+  });
+}
 
-    <div class="feedback" id="${aspect.id}-feedback"></div>
-  `;
+function finish() {
+  let total = 0;
+  aspects.forEach((a, ai) => {
+    const avg = answers[ai].reduce((s,i)=>s+a.questions[0].scores[i],0)/answers[ai].length;
+    total += avg * a.weight;
+  });
 
-  form.appendChild(div);
-});
-
-// =======================
-// LIVE FEEDBACK LOGIC
-// =======================
-function updateFeedback(aspect) {
-  const slider = document.getElementById(aspect.id);
-  const valueDisplay = document.getElementById(`${aspect.id}-value`);
-  const feedbackBox = document.getElementById(`${aspect.id}-feedback`);
-
-  const score = Number(slider.value);
-  const feedback = getFeedback(score, aspect.weight);
-
-  valueDisplay.textContent = score;
-
-  feedbackBox.innerHTML = `
-    kondisi: <strong>${feedback.condition}</strong>
-    pola hubungan: ${feedback.pattern}<br/>
-    saran: ${feedback.advice}
+  document.getElementById("app").innerHTML = `
+    <h2>Hasil Akhir</h2>
+    <p>Total Skor: <b>${Math.round(total)}</b></p>
+    <p>
+      ${total < 700 ? "belum siap hubungan serius"
+      : total < 850 ? "cukup siap dengan seleksi ketat"
+      : "siap hubungan jangka panjang sehat"}
+    </p>
   `;
 }
 
-// attach listener
-aspects.forEach(aspect => {
-  const slider = document.getElementById(aspect.id);
-  slider.addEventListener("input", () => updateFeedback(aspect));
-  updateFeedback(aspect); // initial render
-});
+document.getElementById("nextBtn").onclick = () =>
+  index < aspects.length-1 ? (index++,render()) : finish();
 
-// =======================
-// HITUNG TOTAL SKOR
-// =======================
-document.getElementById("calculateBtn").addEventListener("click", () => {
-  let total = 0;
+document.getElementById("prevBtn").onclick = () =>
+  index>0 && (index--,render());
 
-  aspects.forEach(aspect => {
-    const score = Number(document.getElementById(aspect.id).value);
-    total += score * aspect.weight;
-  });
-
-  let conclusion = "";
-  if (total < 600) {
-    conclusion = "belum siap hubungan serius";
-  } else if (total < 720) {
-    conclusion = "cukup siap, perlu seleksi pasangan ketat";
-  } else {
-    conclusion = "siap membangun hubungan jangka panjang sehat";
-  }
-
-  document.getElementById("result").innerHTML = `
-    <h2>Hasil Akhir</h2>
-    <p><b>Total Skor:</b> ${total}</p>
-    <p><b>Kesimpulan:</b> ${conclusion}</p>
-  `;
-});
+render();
