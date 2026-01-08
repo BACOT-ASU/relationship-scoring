@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Relationship Readiness Scoring</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Relationship Readiness Assessment</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>Self Assessment – Kesiapan Hubungan</h1>
-  <p>geser slider 0–10 dan lihat feedback langsung</p>
+<div id="app">
+  <h1 id="aspectTitle"></h1>
+  <p id="aspectDesc"></p>
 
-  <form id="assessmentForm"></form>
+  <div id="questions"></div>
 
-  <button id="calculateBtn">Hitung Total Skor</button>
+  <div class="nav">
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
+  </div>
+</div>
 
-  <div id="result"></div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
