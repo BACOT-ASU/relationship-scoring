@@ -2,30 +2,72 @@ const aspects = [
   {
     id: "character",
     name: "Karakter & Nilai Hidup",
-    weight: 9,
-    ranges: [
-      { min: 0, max: 3, condition: "integritas rapuh", pattern: "hubungan tidak aman", advice: "benahi kejujuran & tanggung jawab dasar" },
-      { min: 4, max: 5, condition: "nilai goyah", pattern: "konflik nilai berulang", advice: "buat prinsip hidup yang jelas" },
-      { min: 6, max: 7, condition: "cukup kuat", pattern: "hubungan relatif aman", advice: "latih konsistensi" },
-      { min: 8, max: 9, condition: "integritas kuat", pattern: "pasangan merasa aman", advice: "jangan kompromi nilai" },
-      { min: 10, max: 10, condition: "sangat stabil", pattern: "relasi jangka panjang sehat", advice: "cari pasangan setara nilai" }
-    ]
+    weight: 9
   },
   {
     id: "emotion",
     name: "Regulasi Emosi",
-    weight: 9,
-    ranges: [
-      { min: 0, max: 3, condition: "emosi reaktif", pattern: "drama & ledakan", advice: "latihan pause & refleksi emosi" },
-      { min: 4, max: 5, condition: "kurang stabil", pattern: "konflik berulang", advice: "kenali trigger emosi" },
-      { min: 6, max: 7, condition: "cukup stabil", pattern: "konflik bisa diselesaikan", advice: "evaluasi pasca konflik" },
-      { min: 8, max: 9, condition: "stabil", pattern: "pasangan merasa aman", advice: "jangan menekan emosi" },
-      { min: 10, max: 10, condition: "sangat matang", pattern: "hubungan dewasa", advice: "pasangan harus setara emosional" }
-    ]
+    weight: 9
+  },
+  {
+    id: "communication",
+    name: "Komunikasi",
+    weight: 8
+  },
+  {
+    id: "sexual",
+    name: "Kecocokan Seksual",
+    weight: 6
+  },
+  {
+    id: "spiritual",
+    name: "Spiritualitas & Makna",
+    weight: 6
   }
 ];
 
-// ====== RENDER FORM ======
+// =======================
+// REKOMENDASI OTOMATIS
+// =======================
+function getFeedback(score, weight) {
+  if (score <= 3) {
+    return {
+      condition: "sangat lemah",
+      pattern: "rawan konflik & ketergantungan",
+      advice: "fokus perbaiki diri sebelum hubungan serius"
+    };
+  }
+  if (score <= 5) {
+    return {
+      condition: "kurang stabil",
+      pattern: "hubungan naik turun",
+      advice: "perlu latihan konsistensi & refleksi"
+    };
+  }
+  if (score <= 7) {
+    return {
+      condition: "cukup sehat",
+      pattern: "hubungan bisa berjalan",
+      advice: "pilih pasangan yang mendukung pertumbuhan"
+    };
+  }
+  if (score <= 9) {
+    return {
+      condition: "kuat",
+      pattern: "hubungan relatif aman",
+      advice: "jaga standar & batas pribadi"
+    };
+  }
+  return {
+    condition: "sangat matang",
+    pattern: "siap hubungan jangka panjang",
+    advice: "cari pasangan setara, jangan menurunkan level"
+  };
+}
+
+// =======================
+// RENDER UI
+// =======================
 const form = document.getElementById("assessmentForm");
 
 aspects.forEach(aspect => {
@@ -33,64 +75,75 @@ aspects.forEach(aspect => {
   div.className = "aspect";
 
   div.innerHTML = `
-    <label>${aspect.name}</label>
-    <small>nilai 0–10</small><br/>
-    <input type="number" min="0" max="10" id="${aspect.id}" />
+    <div class="aspect-header">
+      <span>${aspect.name}</span>
+      <span id="${aspect.id}-value">5</span>
+    </div>
+
+    <input 
+      type="range" 
+      min="0" 
+      max="10" 
+      value="5"
+      id="${aspect.id}"
+    />
+
+    <div class="feedback" id="${aspect.id}-feedback"></div>
   `;
 
   form.appendChild(div);
 });
 
-// ====== HELPER FUNCTIONS ======
-function getRange(score, ranges) {
-  return ranges.find(r => score >= r.min && score <= r.max);
+// =======================
+// LIVE FEEDBACK LOGIC
+// =======================
+function updateFeedback(aspect) {
+  const slider = document.getElementById(aspect.id);
+  const valueDisplay = document.getElementById(`${aspect.id}-value`);
+  const feedbackBox = document.getElementById(`${aspect.id}-feedback`);
+
+  const score = Number(slider.value);
+  const feedback = getFeedback(score, aspect.weight);
+
+  valueDisplay.textContent = score;
+
+  feedbackBox.innerHTML = `
+    kondisi: <strong>${feedback.condition}</strong>
+    pola hubungan: ${feedback.pattern}<br/>
+    saran: ${feedback.advice}
+  `;
 }
 
-function interpretTotal(total) {
-  if (total < 650) {
-    return "Belum siap hubungan serius – fokus benahi diri";
-  }
-  if (total < 720) {
-    return "Cukup siap – perlu batas & seleksi kuat";
-  }
-  return "Siap membangun hubungan jangka panjang sehat";
-}
+// attach listener
+aspects.forEach(aspect => {
+  const slider = document.getElementById(aspect.id);
+  slider.addEventListener("input", () => updateFeedback(aspect));
+  updateFeedback(aspect); // initial render
+});
 
-// ====== MAIN LOGIC ======
+// =======================
+// HITUNG TOTAL SKOR
+// =======================
 document.getElementById("calculateBtn").addEventListener("click", () => {
-  let totalScore = 0;
-  let output = "";
+  let total = 0;
 
   aspects.forEach(aspect => {
-    const value = Number(document.getElementById(aspect.id).value);
-    if (isNaN(value) || value < 0 || value > 10) {
-      alert("semua aspek harus diisi dengan nilai 0–10");
-      return;
-    }
-
-    const weighted = value * aspect.weight;
-    totalScore += weighted;
-
-    const range = getRange(value, aspect.ranges);
-
-    output += `
-      <div class="result-item">
-        <strong>${aspect.name}</strong><br/>
-        nilai: ${value} × bobot ${aspect.weight} = <b>${weighted}</b><br/>
-        kondisi: ${range.condition}<br/>
-        pola hubungan: ${range.pattern}<br/>
-        saran: ${range.advice}
-      </div>
-    `;
+    const score = Number(document.getElementById(aspect.id).value);
+    total += score * aspect.weight;
   });
 
-  const summary = interpretTotal(totalScore);
+  let conclusion = "";
+  if (total < 600) {
+    conclusion = "belum siap hubungan serius";
+  } else if (total < 720) {
+    conclusion = "cukup siap, perlu seleksi pasangan ketat";
+  } else {
+    conclusion = "siap membangun hubungan jangka panjang sehat";
+  }
 
   document.getElementById("result").innerHTML = `
     <h2>Hasil Akhir</h2>
-    <p><b>Total Skor:</b> ${totalScore}</p>
-    <p><b>Kesimpulan:</b> ${summary}</p>
-    <hr/>
-    ${output}
+    <p><b>Total Skor:</b> ${total}</p>
+    <p><b>Kesimpulan:</b> ${conclusion}</p>
   `;
 });
